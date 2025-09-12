@@ -5,8 +5,24 @@ const custom = defineConfig({
   theme: {
     tokens: {
       colors: {
+        // Paleta baseada no azul da marca (logo)
         brand: {
-          500: { value: '#0066ff' },
+          50:  { value: '#eef4ff' },
+          100: { value: '#d9e2ff' },
+          200: { value: '#b3c4ff' },
+          300: { value: '#8ca6ff' },
+          400: { value: '#5f84ff' },
+          500: { value: '#2f5cff' },
+          600: { value: '#2347d9' },
+          700: { value: '#1c38b0' },
+          800: { value: '#152a86' },
+          900: { value: '#101f66' },
+        },
+        // Tons de superfície neutros claros
+        surface: {
+          50:  { value: '#f9fafb' },
+          100: { value: '#f4f6f8' },
+          200: { value: '#eef1f4' },
         },
       },
       fonts: {
@@ -17,6 +33,37 @@ const custom = defineConfig({
         body: {
           value:
             "Inter, -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji'",
+        },
+      },
+    },
+    recipes: {
+      button: {
+        base: {
+          rounded: 'lg',
+          fontWeight: 'semibold',
+        },
+        variants: {
+          solid: {
+            bg: 'brand.700',
+            color: 'white',
+            _hover: { bg: 'brand.800' },
+            _active: { bg: 'brand.900' },
+          },
+          outline: {
+            borderWidth: '1px',
+            borderColor: 'brand.700',
+            color: 'brand.700',
+            _hover: { bg: 'brand.50' },
+            _active: { bg: 'brand.100' },
+          },
+          ghost: {
+            color: 'brand.700',
+            _hover: { bg: 'brand.50' },
+            _active: { bg: 'brand.100' },
+          },
+        },
+        defaultVariants: {
+          variant: 'solid',
         },
       },
     },
