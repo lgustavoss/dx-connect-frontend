@@ -5,6 +5,12 @@ Resumo:
 - AuthProvider com persistência de token
 - axios com interceptors e baseURL via .env
 - Rotas protegidas e QueryClientProvider
+- Refresh de token com coalescing e retry da requisição original
+
+Notas de CORS / Autenticação:
+- Front envia JWT no header Authorization (sem cookies)
+- Sem uso de withCredentials no frontend
+- Backend liberou as origens do front via CORS (localhost:5173)
 
 Como validar:
 - npm install

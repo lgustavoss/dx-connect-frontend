@@ -36,37 +36,7 @@ const custom = defineConfig({
         },
       },
     },
-    recipes: {
-      button: {
-        base: {
-          rounded: 'lg',
-          fontWeight: 'semibold',
-        },
-        variants: {
-          solid: {
-            bg: 'brand.700',
-            color: 'white',
-            _hover: { bg: 'brand.800' },
-            _active: { bg: 'brand.900' },
-          },
-          outline: {
-            borderWidth: '1px',
-            borderColor: 'brand.700',
-            color: 'brand.700',
-            _hover: { bg: 'brand.50' },
-            _active: { bg: 'brand.100' },
-          },
-          ghost: {
-            color: 'brand.700',
-            _hover: { bg: 'brand.50' },
-            _active: { bg: 'brand.100' },
-          },
-        },
-        defaultVariants: {
-          variant: 'solid',
-        },
-      },
-    },
+    // Removido recipes para evitar erros de tipagem; usamos componente wrapper
   },
 })
 

@@ -1,17 +1,18 @@
-import { Box, Heading, Input, InputGroup, Stack, Text } from '@chakra-ui/react'
+import { Box, Heading, Input, InputGroup, Stack, Text, chakra } from '@chakra-ui/react'
 import PrimaryButton from '../components/PrimaryButton'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 type FormValues = { username: string; password: string }
 
 export default function LoginPage() {
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const navigate = useNavigate()
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm<FormValues>({
     defaultValues: { username: 'admin', password: '' },
+    mode: 'onChange',
   })
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
@@ -22,9 +23,15 @@ export default function LoginPage() {
       await login(values)
       navigate('/', { replace: true })
     } catch (err: any) {
-      setSubmitError(err?.response?.data?.message ?? 'Falha ao autenticar')
+      const data = err?.response?.data
+      const serverMsg = data?.detail || data?.message || (typeof data === 'object' && data ? Object.values(data)[0] : null)
+      setSubmitError((Array.isArray(serverMsg) ? serverMsg[0] : serverMsg) || 'Falha ao autenticar')
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/', { replace: true })
+  }, [isAuthenticated, navigate])
 
   return (
     <Box minH="100dvh" w="100%" overflow="hidden"
@@ -57,11 +64,12 @@ export default function LoginPage() {
                 {errors.username && <Text color="red.500" fontSize="sm">{errors.username.message}</Text>}
               </Stack>
               <Stack>
-                <InputGroup size="lg">
+                <InputGroup>
                   <Box position="relative" w="full">
                     <Input size="lg" type={showPassword ? 'text' : 'password'} placeholder="Senha" bg="gray.50" _focus={{ bg: 'white' }} pr="2.75rem"
                            {...register('password', { required: 'Informe sua senha' })} />
-                    <Box as="button" type="button"
+                    <chakra.button
+                         type="button"
                          aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                          onClick={() => setShowPassword((v) => !v)}
                          h="2rem"
@@ -90,13 +98,13 @@ export default function LoginPage() {
                           <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5Zm0 12.75a5.25 5.25 0 1 1 0-10.5 5.25 5.25 0 0 1 0 10.5Zm0-8.25a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>
                         </svg>
                       )}
-                    </Box>
+                    </chakra.button>
                   </Box>
                 </InputGroup>
                 {errors.password && <Text color="red.500" fontSize="sm">{errors.password.message}</Text>}
               </Stack>
               {submitError && <Text color="red.600" fontSize="sm">{submitError}</Text>}
-              <PrimaryButton size="lg" type="submit" isLoading={isSubmitting}>
+              <PrimaryButton size="lg" type="submit" loading={isSubmitting} disabled={!isValid || isSubmitting}>
                 Entrar
               </PrimaryButton>
               <Text fontSize="sm" color="gray.500" textAlign="center">

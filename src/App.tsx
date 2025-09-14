@@ -1,12 +1,12 @@
 import './App.css'
-import { Box, HStack, Text } from '@chakra-ui/react'
-import PrimaryButton from './components/PrimaryButton'
+import { HStack, Text } from '@chakra-ui/react'
 import { useAuth } from './hooks/useAuth'
 import { useEffect, useState } from 'react'
 import { getMe } from './services/authService'
+import LayoutShell from './components/LayoutShell'
 
 function App() {
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated } = useAuth()
   const [me, setMe] = useState<any | null>(null)
   const [isLoadingMe, setIsLoadingMe] = useState(false)
 
@@ -24,10 +24,9 @@ function App() {
     return () => { mounted = false }
   }, [isAuthenticated])
   return (
-    <Box p={6}>
+    <LayoutShell>
       <HStack justify="space-between">
-        <Text fontWeight="bold">DX Connect</Text>
-        {isAuthenticated && <PrimaryButton size="sm" onClick={logout}>Sair</PrimaryButton>}
+        <Text fontWeight="bold">Início</Text>
       </HStack>
       <Text mt={4}>Boas-vindas ao DX Connect.</Text>
       {isLoadingMe && (
@@ -36,7 +35,7 @@ function App() {
       {me && !isLoadingMe && (
         <Text mt={2} color="gray.600">Usuário: {me?.username ?? me?.email ?? 'autenticado'}</Text>
       )}
-    </Box>
+    </LayoutShell>
   )
 }
 
