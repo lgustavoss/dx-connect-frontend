@@ -21,7 +21,7 @@ export default function LoginPage() {
     setSubmitError(null)
     try {
       await login(values)
-      navigate('/', { replace: true })
+      navigate('/app/dashboard', { replace: true })
     } catch (err: any) {
       const data = err?.response?.data
       const serverMsg = data?.detail || data?.message || (typeof data === 'object' && data ? Object.values(data)[0] : null)
@@ -30,7 +30,7 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/', { replace: true })
+    if (isAuthenticated) navigate('/app/dashboard', { replace: true })
   }, [isAuthenticated, navigate])
 
   return (

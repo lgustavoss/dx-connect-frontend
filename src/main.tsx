@@ -9,6 +9,12 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import LoginPage from './pages/Login'
 import DesignColorsPage from './pages/DesignColors'
+import DashboardPage from './pages/Dashboard'
+import CustomersPage from './pages/Customers'
+import ChatsPage from './pages/Chats'
+import TicketsPage from './pages/Tickets'
+import ReportsPage from './pages/Reports'
+import PrivateLayout from './layouts/PrivateLayout'
 
 const queryClient = new QueryClient()
 
@@ -26,7 +32,16 @@ createRoot(document.getElementById('root')!).render(
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/design/colors" element={<DesignColorsPage />} />
-              <Route path="/*" element={<PrivateRoute><App /></PrivateRoute>} />
+              {/* Rota raiz pública: envia para /login */}
+              <Route index element={<Navigate to="/login" replace />} />
+              <Route path="/app/*" element={<PrivateRoute><PrivateLayout /></PrivateRoute>}>
+                <Route index element={<Navigate to="dashboard" replace />} />
+                <Route path="dashboard" element={<DashboardPage />} />
+                <Route path="customers" element={<CustomersPage />} />
+                <Route path="chats" element={<ChatsPage />} />
+                <Route path="tickets" element={<TicketsPage />} />
+                <Route path="reports" element={<ReportsPage />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </AuthProvider>

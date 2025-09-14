@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { getToken, login as doLogin, logout as doLogout } from '../services/authService'
 import type { LoginCredentials } from '../services/authService'
 
@@ -13,6 +13,11 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(getToken())
+  // Sanitiza tokens inválidos no mount (evita autenticação fantasma)
+  useEffect(() => {
+    const t = getToken()
+    if (t !== token) setToken(t)
+  }, [])
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     await doLogin(credentials)

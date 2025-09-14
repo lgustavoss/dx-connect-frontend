@@ -62,11 +62,11 @@ const Icon = {
 }
 
 const navigation = [
-  { label: 'Dashboard', path: '/dashboard', icon: Icon.dashboard },
-  { label: 'Clientes', path: '/customers', icon: Icon.users },
-  { label: 'Chats', path: '/chats', icon: Icon.chat },
-  { label: 'Tickets', path: '/tickets', icon: Icon.ticket },
-  { label: 'Relatórios', path: '/reports', icon: Icon.reports },
+  { label: 'Dashboard', path: '/app/dashboard', icon: Icon.dashboard },
+  { label: 'Clientes', path: '/app/customers', icon: Icon.users },
+  { label: 'Chats', path: '/app/chats', icon: Icon.chat },
+  { label: 'Tickets', path: '/app/tickets', icon: Icon.ticket },
+  { label: 'Relatórios', path: '/app/reports', icon: Icon.reports },
 ]
 
 export default function LayoutShell({ children, showSidebar = true, contentPadding = '6' }: LayoutProps) {
@@ -164,14 +164,19 @@ export default function LayoutShell({ children, showSidebar = true, contentPaddi
             <Stack p={3} pt={isDesktop ? 3 : 2}>
               {navigation.map((item) => (
                 <NavLink key={item.path} to={item.path} style={{ textDecoration: 'none' }}>
-                  {({ isActive }) => (
-                    <Box px={isDesktop && !isOpen ? 0 : 3} py={2} rounded="md" display="flex" alignItems="center" gap={3}
-                         bg={isActive || location.pathname.startsWith(item.path) ? 'brand.50' : 'transparent'}
-                         color={isActive ? 'brand.700' : 'gray.700'} _hover={{ bg: 'brand.50' }} justifyContent={isDesktop && !isOpen ? 'center' : 'flex-start'}>
-                      {item.icon}
-                      <Box display={(isTablet && !isDesktop) || (isDesktop && !isOpen) ? 'none' : 'block'} whiteSpace="nowrap">{item.label}</Box>
-                    </Box>
-                  )}
+                  {({ isActive }) => {
+                    const hideLabel = (isTablet && !isDesktop) || (isDesktop && !isOpen)
+                    const active = isActive || location.pathname.startsWith(item.path)
+                    return (
+                      <Box px={hideLabel ? 0 : 3} py={2} rounded="md" display="flex" alignItems="center" gap={3}
+                           title={hideLabel ? item.label : undefined}
+                           bg={active ? 'brand.50' : 'transparent'}
+                           color={active ? 'brand.700' : 'gray.700'} _hover={{ bg: 'brand.50' }} justifyContent={hideLabel ? 'center' : 'flex-start'}>
+                        {item.icon}
+                        <Box display={hideLabel ? 'none' : 'block'} whiteSpace="nowrap">{item.label}</Box>
+                      </Box>
+                    )
+                  }}
                 </NavLink>
               ))}
             </Stack>
