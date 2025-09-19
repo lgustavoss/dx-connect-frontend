@@ -10,7 +10,7 @@ export const api = axios.create({
 let refreshRequest: Promise<string | null> | null = null
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem(appConfig.storageTokenKey)
+  const token = sessionStorage.getItem(appConfig.storageTokenKey)
   if (token) {
     config.headers = config.headers ?? {}
     config.headers.Authorization = `Bearer ${token}`
@@ -39,8 +39,8 @@ api.interceptors.response.use(
       } catch (_) {
         // ignore
       }
-      localStorage.removeItem(appConfig.storageTokenKey)
-      localStorage.removeItem(appConfig.storageTokenKey + '_refresh')
+      sessionStorage.removeItem(appConfig.storageTokenKey)
+      sessionStorage.removeItem(appConfig.storageTokenKey + '_refresh')
       try {
         if (typeof window !== 'undefined') {
           window.location.replace('/login')

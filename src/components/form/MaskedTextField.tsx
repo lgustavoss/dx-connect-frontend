@@ -1,4 +1,3 @@
-import { Input } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import Field from './Field'
 
@@ -43,7 +42,7 @@ export default function MaskedTextField({ name, label, placeholder, mask, requir
       control={control}
       render={({ field, fieldState }) => (
         <Field name={name} label={label} required={required} helpText={helpText} isInvalid={!!fieldState.error} errorMessage={fieldState.error?.message}>
-          <Input value={applyMask(field.value ?? '', mask)} onChange={(e) => field.onChange(applyMask(e.target.value, mask))} placeholder={placeholder} />
+          <input value={applyMask(field.value ?? '', mask)} onChange={(e) => field.onChange(applyMask(e.target.value, mask))} placeholder={placeholder} className="dxc-input" />
         </Field>
       )}
     />

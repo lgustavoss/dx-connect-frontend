@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 
 export interface FormSectionProps {
   title: string
@@ -9,7 +9,7 @@ export interface FormSectionProps {
 export default function FormSection({ title, description, children }: FormSectionProps) {
   return (
     <Box mb={6}>
-      <Heading size="sm" mb={1}>{title}</Heading>
+      <Box className="dxc-section-title">{title}</Box>
       {description && <Text color="gray.600" mb={3}>{description}</Text>}
       <Box>{children}</Box>
     </Box>

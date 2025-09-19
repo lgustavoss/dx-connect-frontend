@@ -1,4 +1,3 @@
-import { NumberInput, NumberInputField } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import Field from './Field'
 
@@ -21,9 +20,21 @@ export default function NumberField({ name, label, placeholder, required, helpTe
       control={control}
       render={({ field, fieldState }) => (
         <Field name={name} label={label} required={required} helpText={helpText} isInvalid={!!fieldState.error} errorMessage={fieldState.error?.message}>
-          <NumberInput value={field.value ?? ''} onChange={(v) => field.onChange(v === '' ? '' : Number(v))} min={min} max={max} step={step}>
-            <NumberInputField placeholder={placeholder} />
-          </NumberInput>
+          <input
+            type="number"
+            value={field.value ?? ''}
+            onChange={(e) => {
+              const v = e.target.value
+              if (v === '') return field.onChange('')
+              const num = Number(v)
+              if (!Number.isNaN(num)) field.onChange(num)
+            }}
+            placeholder={placeholder}
+            min={min as any}
+            max={max as any}
+            step={step as any}
+            className="dxc-input"
+          />
         </Field>
       )}
     />

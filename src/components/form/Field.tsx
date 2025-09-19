@@ -1,4 +1,3 @@
-import { FormControl, FormErrorMessage, FormHelperText, FormLabel } from '@chakra-ui/react'
 import type { ReactNode } from 'react'
 
 export interface FieldProps {
@@ -14,13 +13,17 @@ export interface FieldProps {
 export default function Field(props: FieldProps) {
   const { name, label, helpText, required, isInvalid, errorMessage, children } = props
   return (
-    <FormControl id={name} isRequired={required} invalid={isInvalid}>
-      {label && <FormLabel>{label}</FormLabel>}
+    <div data-field={name} className={`dxc-field${isInvalid ? ' is-invalid' : ''}`}>
+      {label && (
+        <div className="dxc-input-label">
+          {label}
+          {required && <span className="dxc-required"> *</span>}
+        </div>
+      )}
       {children}
-      {helpText && <FormHelperText>{helpText}</FormHelperText>}
-      {isInvalid && errorMessage && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
-    </FormControl>
-  )
-}
+      {helpText && <div className="dxc-help">{helpText}</div>}
+      {isInvalid && errorMessage && <div className="dxc-error">{errorMessage}</div>}
+    </div>
+  )}
 
 

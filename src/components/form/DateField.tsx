@@ -1,4 +1,3 @@
-import { Input } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import Field from './Field'
 
@@ -17,7 +16,7 @@ export default function DateField({ name, label, required, helpText }: DateField
       control={control}
       render={({ field, fieldState }) => (
         <Field name={name} label={label} required={required} helpText={helpText} isInvalid={!!fieldState.error} errorMessage={fieldState.error?.message}>
-          <Input {...field} type="date" />
+          <input {...field} type="date" className="dxc-input" />
         </Field>
       )}
     />

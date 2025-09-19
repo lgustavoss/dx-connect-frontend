@@ -15,6 +15,7 @@ import ChatsPage from './pages/Chats'
 import TicketsPage from './pages/Tickets'
 import ReportsPage from './pages/Reports'
 import PrivateLayout from './layouts/PrivateLayout'
+import SettingsPage from './pages/Settings'
 
 const queryClient = new QueryClient()
 
@@ -33,7 +34,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/login" element={<LoginPage />} />
               <Route path="/design/colors" element={<DesignColorsPage />} />
               {/* Rota raiz pública: envia para /login */}
-              <Route index element={<Navigate to="/login" replace />} />
+              <Route path="/" element={<Navigate to="/login" replace />} />
               <Route path="/app/*" element={<PrivateRoute><PrivateLayout /></PrivateRoute>}>
                 <Route index element={<Navigate to="dashboard" replace />} />
                 <Route path="dashboard" element={<DashboardPage />} />
@@ -41,6 +42,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="chats" element={<ChatsPage />} />
                 <Route path="tickets" element={<TicketsPage />} />
                 <Route path="reports" element={<ReportsPage />} />
+                <Route path="settings" element={<SettingsPage />} />
               </Route>
             </Routes>
           </BrowserRouter>

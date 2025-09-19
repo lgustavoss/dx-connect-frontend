@@ -7,6 +7,7 @@ import CustomersPage from '../pages/Customers'
 import ChatsPage from '../pages/Chats'
 import TicketsPage from '../pages/Tickets'
 import ReportsPage from '../pages/Reports'
+import SettingsPage from '../pages/Settings'
 
 type TabDef = { title: string; path: string; component: React.ComponentType; fixed?: boolean }
 
@@ -16,6 +17,7 @@ const ROUTES: Record<string, TabDef> = {
   '/app/chats': { title: 'Chats', path: '/app/chats', component: ChatsPage },
   '/app/tickets': { title: 'Tickets', path: '/app/tickets', component: TicketsPage },
   '/app/reports': { title: 'Relatórios', path: '/app/reports', component: ReportsPage },
+  '/app/settings': { title: 'Configurações', path: '/app/settings', component: SettingsPage },
 }
 
 export default function PrivateLayout() {
@@ -105,8 +107,7 @@ export default function PrivateLayout() {
           const isActive = activePath === t.path
           return (
             <HStack key={t.path}
-                    as={chakra.button}
-                    type="button"
+                    as={Box}
                     onClick={() => handleSelect(t.path)}
                     px={3} py={2}
                     roundedTop="md"
@@ -124,7 +125,8 @@ export default function PrivateLayout() {
                     zIndex={isActive ? 1 : 0}
                     boxShadow={isActive ? '0 1px 0 #fff inset' : 'none'}
                     mb={-1}
-                    role="group">
+                    role="group"
+                    cursor="pointer">
               <Box>{t.title}</Box>
               {!t.fixed && (
                 <chakra.button type="button"

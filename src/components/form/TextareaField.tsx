@@ -1,4 +1,3 @@
-import { Textarea } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import Field from './Field'
 
@@ -18,7 +17,7 @@ export default function TextareaField({ name, label, placeholder, required, help
       control={control}
       render={({ field, fieldState }) => (
         <Field name={name} label={label} required={required} helpText={helpText} isInvalid={!!fieldState.error} errorMessage={fieldState.error?.message}>
-          <Textarea {...field} placeholder={placeholder} />
+          <textarea {...field} placeholder={placeholder} className="dxc-input dxc-textarea" />
         </Field>
       )}
     />

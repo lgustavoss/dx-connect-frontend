@@ -1,4 +1,3 @@
-import { Checkbox } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import Field from './Field'
 
@@ -16,7 +15,10 @@ export default function CheckboxField({ name, label, helpText }: CheckboxFieldPr
       control={control}
       render={({ field }) => (
         <Field name={name} helpText={helpText}>
-          <Checkbox isChecked={!!field.value} onChange={(e) => field.onChange(e.target.checked)}>{label}</Checkbox>
+          <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <input type="checkbox" checked={!!field.value} onChange={(e) => field.onChange(e.target.checked)} />
+            <span>{label}</span>
+          </label>
         </Field>
       )}
     />

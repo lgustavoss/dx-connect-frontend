@@ -1,4 +1,3 @@
-import { HStack, Switch, Text } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import Field from './Field'
 
@@ -16,10 +15,10 @@ export default function SwitchField({ name, label, helpText }: SwitchFieldProps)
       control={control}
       render={({ field }) => (
         <Field name={name} label={label} helpText={helpText}>
-          <HStack>
-            <Switch isChecked={!!field.value} onChange={(e) => field.onChange(e.target.checked)} />
-            <Text>{field.value ? 'Ativado' : 'Desativado'}</Text>
-          </HStack>
+          <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <input type="checkbox" checked={!!field.value} onChange={(e) => field.onChange(e.target.checked)} />
+            <span>{field.value ? 'Ativado' : 'Desativado'}</span>
+          </label>
         </Field>
       )}
     />
